@@ -1,0 +1,70 @@
+IN this project expense tracker:
+we are creating a expense tracked where we can add delete and maintain the record of our transactions.
+
+we are using userState, hooks and many other important front end react things.
+
+we have created components folder in src and create components according to our need, we are using useState to manage the state of our form in our addTransactions form.
+
+useState is one type hook which is used in react
+
+useState
+
+const [ text, setText ] = useState('');
+
+here for an input we are using text state
+
+ <input type="text" placeholder='enter text...' value={text} onChange={(e) => setText(e.target.value)} />
+
+from this example we can see that the value of is text and the change in value will happen when the event will be triggered so we are providing e.target.value ie. whatever input provided by the user will change the current state that means it will change the current value.
+
+simply useState is used to change the state of an component.
+
+useContext:
+useContext is a mechanism used for passing data through the component tree without having to pass props down manually at every level.
+
+its mainly used for reasons mentioned below:
+1) to avoid prop drilling: with context you need to pass through every level of your component tree using props.
+2) Global state management: 
+cintext is often used for global state management in react applications. it provides a central place to store and access sgared state and making it available to any component in the application.
+
+
+3)Theme and Configuration: Context is valuable for storing theme information, configuration settings, or user authentication data that needs to be available across various parts of your application.
+
+4)Localization: If you need to provide internationalization (i18n) and localization (l10n) features in your app, context can be used to make the current language or locale information available to all components.
+
+
+In our current example of expense tracker project we are using only single context as application is really small scale. if there are many components then we can create mulitple context accroding to it.
+
+as we are using single global context we need to wrap it under the provides to make all component use the data inside our global context file. so we are creating a provider for our global context now.
+
+
+export const GlobalProvider = ({ children }) => {
+    const [ state, dispatch] = useReducer( AppReducer, initialState );
+
+    return (
+        <GlobalContext.Provider value={{
+            transactions: state.transactions
+        }}>
+            {children}
+        </GlobalContext.Provider>
+    )
+}
+this is an example of a globalProvide functions
+ children is considered as the components we warpping.
+
+const initialState = {
+    transactions: [
+    { id: 1, text: 'flower', amount: -20 },
+    { id: 2, text: 'flower', amount: -30 },
+    { id: 3, text: 'flower', amount: 100 },
+    { id: 4, text: 'flower', amount: -50 },
+    { id: 5, text: 'flower', amount: 200 },
+    ]
+}
+
+this is our initialState we are using this data throughout all our components by using globalContext and GlobalProvider, right now we are passing the value transactions
+
+ <GlobalContext.Provider value={{
+            transactions: state.transactions
+        }}>
+as we can see from the code
